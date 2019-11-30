@@ -22,11 +22,12 @@ public class RecipeForm extends AppCompatActivity {
         recipeDB = new RecipeDatabaseHelper(this);
     }
 
-    public void createRecipe(){
-    }
-
     public void saveRecipe(View view) {
         Recipe recipe = getRecipe();
+        if(recipe.getName().isEmpty()){
+            Toast.makeText(this, "Pleas enter a name", Toast.LENGTH_LONG).show();
+            return;
+        }
         saveRecipe(recipe);
 
         Intent intent = new Intent(this, MainActivity.class);

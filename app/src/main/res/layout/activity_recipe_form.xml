@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:ems="10"
+        android:hint="Recipe name"
         android:inputType="textPersonName"
-        android:text="Recipe name"
         app:layout_constraintBottom_toTopOf="@+id/recipeEndOfWarrantyField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:ems="10"
+        android:hint="End of warranty"
         android:inputType="textPersonName"
-        android:text="End of warranty"
         app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
