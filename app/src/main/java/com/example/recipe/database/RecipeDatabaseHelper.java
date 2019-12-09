@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
@@ -67,5 +68,14 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return allRecipes;
+    }
+
+    public Optional<Recipe> getByName(String name){
+        return getAll().stream().filter(r -> r.getName().equals(name)).findFirst();
+    }
+
+    public boolean delete(int recipeID){
+        SQLiteDatabase database = getWritableDatabase();
+        return database.delete(RECIPE_TABLE, COLUMN_ID + '=' + recipeID, null) > 0;
     }
 }

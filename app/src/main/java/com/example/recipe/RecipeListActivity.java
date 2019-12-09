@@ -3,7 +3,10 @@ package com.example.recipe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,30 +24,27 @@ public class RecipeListActivity extends AppCompatActivity implements ListFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list);
+        Toast.makeText(this, "in create " + getResources().getConfiguration().orientation, Toast.LENGTH_LONG).show();
 
-        showRecipes();
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            setContentView(R.layout.activity_recipe_list_horizontal);
+        }else {
+            setContentView(R.layout.activity_recipe_list);
+        }
     }
 
-    private void showRecipes(){
-        recipeDB = new RecipeDatabaseHelper(this);
-        ArrayAdapter adapter = getRecipesAdapter();
-        //ListView listView = findViewById(R.id.recipeList);
-        //listView.setAdapter(adapter);
-    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-    private ArrayAdapter getRecipesAdapter() {
-        List<Recipe> recipes = recipeDB.getAll();
-        String[] recipeNames = mapToNameArray(recipes);
-        return new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recipeNames);
+        Toast.makeText(this, "AAAAAAAAAAAAAAAAA", Toast.LENGTH_SHORT).show();
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
-
-    private String[] mapToNameArray(List<Recipe> recipes) {
-        return recipes.stream()
-                .map(Recipe::getName)
-                .toArray(String[]::new);
-    }
-
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -59,5 +59,12 @@ public class RecipeListActivity extends AppCompatActivity implements ListFragmen
         PropertiesFragment propertiesFragment = (PropertiesFragment) getSupportFragmentManager().findFragmentById(R.id.propertiesFragment);
         //((TextView) propertiesFragment.getView().findViewById(R.id.recipeNameField)).setText(name);
         propertiesFragment.updateProperties(name);
+    }
+
+    public void deleteRecipe(View view) {
+        PropertiesFragment propertiesFragment = (PropertiesFragment) getSupportFragmentManager().findFragmentById(R.id.propertiesFragment);
+        propertiesFragment.deleteRecipe(view);
+        finish();
+        startActivity(getIntent());
     }
 }

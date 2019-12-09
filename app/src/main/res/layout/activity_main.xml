@@ -4,31 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation = "vertical">
 
     <Button
         android:id="@+id/recipeFormButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="50dp"
         android:onClick="goToRecipeForm"
         android:text="New Recipe"
-        app:layout_constraintBottom_toTopOf="@+id/recipeListButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/recipeListButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="412dp"
+        android:layout_marginTop="20dp"
         android:onClick="goToRecipeList"
         android:text="Yours Recipe"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipeFormButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
