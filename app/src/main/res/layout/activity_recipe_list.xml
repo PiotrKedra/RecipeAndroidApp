@@ -20,7 +20,7 @@
         android:id="@+id/listFragment"
         android:name="com.example.recipe.ListFragment"
         android:layout_width="match_parent"
-        android:layout_height="368dp"
+        android:layout_height="350dp"
         android:layout_marginTop="40dp"
         app:layout_constraintBottom_toTopOf="@+id/propertiesFragment"
         app:layout_constraintTop_toBottomOf="@+id/yourRecipeLabel"

@@ -38,6 +38,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="60dp"
+            android:clickable="false"
             android:editable="false"
             android:ems="10"
             android:inputType="textPersonName"
@@ -60,17 +61,17 @@
             android:id="@+id/imageView2"
             android:layout_width="70dp"
             android:layout_height="100dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/deleteButton"
-            app:layout_constraintEnd_toEndOf="parent"></ImageView>
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/warrantyField"></ImageView>
 
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="52dp"
             android:onClick="deleteRecipe"
             android:text="Delete"
             app:layout_constraintEnd_toEndOf="parent"

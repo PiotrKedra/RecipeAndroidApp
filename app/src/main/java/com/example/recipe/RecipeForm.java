@@ -22,11 +22,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.recipe.database.Recipe;
 import com.example.recipe.database.RecipeDatabaseHelper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
@@ -38,6 +41,7 @@ public class RecipeForm extends AppCompatActivity {
 
     private RecipeDatabaseHelper recipeDB;
     private Date endOfWarrantyDate;
+    private String readableData;
 
 
     @Override
@@ -54,8 +58,13 @@ public class RecipeForm extends AppCompatActivity {
             Toast.makeText(this, "Pleas enter a name", Toast.LENGTH_LONG).show();
             return;
         }
-        Drawable drawable = imageView.getDrawable();
-        saveRecipe(recipe);
+        if(photoTaken!=null) {
+            createImage(recipe.getName(), photoTaken);
+            saveRecipe(recipe);
+        }else {
+            Toast.makeText(this, "Pleas take a photo of recipe", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -66,7 +75,7 @@ public class RecipeForm extends AppCompatActivity {
         EditText recipeName = findViewById(R.id.recipeNameField);
         return Recipe.builder()
                 .name(recipeName.getText().toString())
-                .endOfWarrantyDate(this.endOfWarrantyDate.toString())
+                .endOfWarrantyDate(this.readableData)
                 .build();
     }
 
@@ -75,9 +84,9 @@ public class RecipeForm extends AppCompatActivity {
                 (datePicker, year, month, day) -> {
                     this.endOfWarrantyDate = new GregorianCalendar(year, month - 1, day).getTime();
                     TextView endOfWarrantyField = findViewById(R.id.recipeEndOfWarrantyField);
-                    DateFormat df = new SimpleDateFormat("dd-mm-yyyy");
-                    String redableData = df.format(this.endOfWarrantyDate);
-                    SpannableString content = new SpannableString(redableData);
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    this.readableData = df.format(this.endOfWarrantyDate);
+                    SpannableString content = new SpannableString(readableData);
                     content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                     endOfWarrantyField.setText(content);
                 }, 2019, 11, 5);
@@ -105,9 +114,11 @@ public class RecipeForm extends AppCompatActivity {
 
     //cammera
 
-    private static final int CAMERA_REQUEST = 1888;
+    private static final int CAMERA_REQUEST = 2;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+
+    private Bitmap photoTaken;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -115,6 +126,7 @@ public class RecipeForm extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
         {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
+            photoTaken = photo;
             imageView.setImageBitmap(photo);
         }
     }
@@ -138,36 +150,20 @@ public class RecipeForm extends AppCompatActivity {
         }
     }
 
-    private void createImage(String name) {
-        Bitmap image = null;
-
+    private void createImage(String name, Bitmap image) {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         File path = Environment.getExternalStorageDirectory();
-
         File dir = new File(path+"/recipeHolder/");
         dir.mkdirs();
-
-        File file = new File(dir, name + "png");
-
+        File file = new File(dir, name + ".png");
         OutputStream outputStream = null;
+        Toast.makeText(this,file.getAbsolutePath(),Toast.LENGTH_LONG).show();
+        try{
+            outputStream = new FileOutputStream(file);
 
-
-    }
-    String imageFilePath;
-
-    private File createImageFile() throws IOException {
-        String timeStamp =
-                new SimpleDateFormat("yyyyMMdd_HHmmss",
-                        Locale.getDefault()).format(new Date());
-        String imageFileName = "IMG_" + timeStamp + "_";
-        File storageDir =
-                getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        imageFilePath = image.getAbsolutePath();
-        return image;
+            image.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
