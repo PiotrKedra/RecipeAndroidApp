@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToLocation(View view){
+        Intent intent = new Intent(this, Main2Activity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
