@@ -9,9 +9,10 @@
 
     <Button
         android:id="@+id/recipeFormButton"
-        android:layout_width="wrap_content"
+        style="@style/recepieBtn"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="200dp"
         android:onClick="goToRecipeForm"
         android:text="New Recipe"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +21,8 @@
 
     <Button
         android:id="@+id/recipeListButton"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
+        style="@style/recepieBtn"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:onClick="goToRecipeList"
@@ -32,8 +34,9 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        style="@style/recepieBtn"
         android:layout_marginTop="20dp"
         android:onClick="goToLocation"
         android:text="Location"

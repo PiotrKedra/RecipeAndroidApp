@@ -1,11 +1,16 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#d69d00</item>
+        <item name="colorPrimaryDark">#cfb674</item>
+        <item name="colorAccent">#fcba03</item>
+        <item name="android:windowBackground">#edd698</item>
+        <item name="android:textColor">#636262</item>
     </style>
 
+    <style name="recepieBtn" parent="@style/Widget.AppCompat.Button.Colored"></style>
+
+    <style name="recepieHeader" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">#636262</item>
+    </style>
 </resources>
