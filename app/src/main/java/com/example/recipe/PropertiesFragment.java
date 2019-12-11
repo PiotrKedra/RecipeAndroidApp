@@ -72,6 +72,9 @@ public class PropertiesFragment extends Fragment {
             TextView warrantyField = view.findViewById(R.id.warrantyField);
             warrantyField.setText(recipe.get().getEndOfWarrantyDate());
 
+            TextView location = view.findViewById(R.id.locationField);
+            location.setText("Latitude: " + recipe.get().getLatitude() + "\nLongitude: " + recipe.get().getLongitude());
+
             currentID = recipe.get().getId();
         }else {
             Toast.makeText(getContext(), "Recipe not found", Toast.LENGTH_LONG).show();

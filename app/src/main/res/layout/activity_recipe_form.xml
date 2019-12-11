@@ -78,5 +78,15 @@
         app:layout_constraintStart_toEndOf="@+id/photoButton"
         app:layout_constraintTop_toBottomOf="@+id/recipeEndOfWarrantyField"></ImageView>
 
+    <TextView
+        android:id="@+id/msgView"
+        android:layout_width="165dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:text="heh"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photoButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

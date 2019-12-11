@@ -22,6 +22,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_END_OF_WARRANTY_DATE = "end_of_warranty_date";
+    private static final String LATITUDE_COLUMN = "latitude";
+    private static final String LONGITUDE_COLUMN = "longitude";
 
     SQLiteDatabase database;
 
@@ -35,7 +37,9 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + RECIPE_TABLE + " ("
                 + COLUMN_ID + " integer primary key autoincrement, "
                 + COLUMN_NAME + " varchar, "
-                + COLUMN_END_OF_WARRANTY_DATE + " varchar)");
+                + COLUMN_END_OF_WARRANTY_DATE + " varchar, "
+                + LATITUDE_COLUMN + " varchar, "
+                + LONGITUDE_COLUMN + " varchar)");
     }
 
     @Override
@@ -49,6 +53,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME, recipe.getName());
         contentValues.put(COLUMN_END_OF_WARRANTY_DATE, recipe.getEndOfWarrantyDate());
+        contentValues.put(LATITUDE_COLUMN, recipe.getLatitude());
+        contentValues.put(LONGITUDE_COLUMN, recipe.getLongitude());
         return database.insert(RECIPE_TABLE, null, contentValues) != -1;
     }
 
@@ -63,6 +69,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
                     .id(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)))
                     .name(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)))
                     .endOfWarrantyDate(cursor.getString(cursor.getColumnIndex(COLUMN_END_OF_WARRANTY_DATE)))
+                    .latitude(cursor.getString(cursor.getColumnIndex(LATITUDE_COLUMN)))
+                    .longitude(cursor.getString(cursor.getColumnIndex(LONGITUDE_COLUMN)))
                     .build();
             allRecipes.add(recipe);
         }

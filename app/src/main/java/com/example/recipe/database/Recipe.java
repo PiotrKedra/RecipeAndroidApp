@@ -5,6 +5,8 @@ public class Recipe {
     private int id;
     private String name;
     private String endOfWarrantyDate;
+    private String latitude;
+    private String longitude;
 
     public Recipe() {
     }
@@ -13,6 +15,8 @@ public class Recipe {
         this.id = builder.id;
         this.name = builder.name;
         this.endOfWarrantyDate = builder.endOfWarrantyDate;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
     }
 
     public int getId() {
@@ -27,6 +31,14 @@ public class Recipe {
         return endOfWarrantyDate;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -35,6 +47,8 @@ public class Recipe {
         private int id;
         private String name;
         private String endOfWarrantyDate;
+        private String latitude;
+        private String longitude;
 
         public Builder id(int id) {
             this.id = id;
@@ -48,6 +62,16 @@ public class Recipe {
 
         public Builder endOfWarrantyDate(String endOfWarrantyDate) {
             this.endOfWarrantyDate = endOfWarrantyDate;
+            return this;
+        }
+
+        public Builder latitude(String latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public Builder longitude(String longitude) {
+            this.longitude = longitude;
             return this;
         }
 
