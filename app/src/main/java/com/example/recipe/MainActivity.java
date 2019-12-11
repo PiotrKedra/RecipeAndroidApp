@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.recipe.database.Recipe;
 import com.example.recipe.database.RecipeDatabaseHelper;
 
+import static com.example.recipe.NotificationsHub.createNotificationChannel;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Toast.makeText(this, "chaing orientation", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_main);
+        createNotificationChannel(this.getApplicationContext());
     }
 
     public void goToRecipeForm(View view){

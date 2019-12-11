@@ -70,6 +70,10 @@
                 android:resource="@xml/provider_path" />
         </provider>
 
+        <receiver android:name=".EndOfRecepieReciver"
+            android:enabled="true"
+            android:exported="true"
+            ></receiver>
     </application>
 
 </manifest>

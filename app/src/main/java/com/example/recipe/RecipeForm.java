@@ -2,7 +2,11 @@ package com.example.recipe;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -32,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -65,7 +70,7 @@ public class RecipeForm extends AppCompatActivity {
             Toast.makeText(this, "Pleas take a photo of recipe", Toast.LENGTH_LONG).show();
             return;
         }
-
+        this.registerNotificationToShow(endOfWarrantyDate,recipe.getName());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -80,17 +85,43 @@ public class RecipeForm extends AppCompatActivity {
     }
 
     public void openDatePicker(View view) {
+        final Calendar c = Calendar.getInstance();
+        int currentDay = c.get(Calendar.DATE);
+        int currentMonth = c.get(Calendar.MONTH);
+        int currentYear = c.get(Calendar.YEAR);
         DatePickerDialog datePickerDialog = new DatePickerDialog(RecipeForm.this,
                 (datePicker, year, month, day) -> {
                     this.endOfWarrantyDate = new GregorianCalendar(year, month - 1, day).getTime();
+                    openTimePicker(year, month, day);
+                }, currentYear, currentMonth, currentDay);
+        datePickerDialog.show();
+    }
+
+    private void openTimePicker(int year, int mounth, int day) {
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                (view, hourOfDay, minute1) -> {
+                    this.endOfWarrantyDate = new GregorianCalendar(year, mounth, day, hourOfDay, minute1).getTime();
                     TextView endOfWarrantyField = findViewById(R.id.recipeEndOfWarrantyField);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     this.readableData = df.format(this.endOfWarrantyDate);
                     SpannableString content = new SpannableString(readableData);
                     content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                     endOfWarrantyField.setText(content);
-                }, 2019, 11, 5);
-        datePickerDialog.show();
+                }, hour, minute, true);
+        timePickerDialog.show();
+    }
+
+    private void registerNotificationToShow(Date date, String name) {
+        long timeDifference = date.getTime() - Calendar.getInstance().getTime().getTime();
+        System.out.println(Calendar.getInstance().getTime());
+        Intent timeOutIntent = new Intent(this.getApplicationContext(), EndOfRecepieReciver.class);
+        timeOutIntent.putExtra("r_name", name);
+        PendingIntent pendingTimeOutIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 0, timeOutIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeDifference, pendingTimeOutIntent);
     }
 
     private void saveRecipe(Recipe recipe) {
@@ -99,6 +130,7 @@ public class RecipeForm extends AppCompatActivity {
         else
             Toast.makeText(this, "Failed to save recipe", Toast.LENGTH_LONG).show();
     }
+
 
     public void takePhoto(View view){
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
