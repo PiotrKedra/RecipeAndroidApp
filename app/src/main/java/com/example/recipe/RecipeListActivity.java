@@ -24,8 +24,6 @@ public class RecipeListActivity extends AppCompatActivity implements ListFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "in create " + getResources().getConfiguration().orientation, Toast.LENGTH_LONG).show();
-
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             setContentView(R.layout.activity_recipe_list_horizontal);
         }else {
