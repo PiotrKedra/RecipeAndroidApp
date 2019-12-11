@@ -72,6 +72,8 @@ public class RecipeForm extends AppCompatActivity {
         this.imageView = this.findViewById(R.id.imageView1);
 
         //location
+
+        // Zadanie 3. Brodcast Reciver
         mMsgView = (TextView) findViewById(R.id.msgView);
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
@@ -345,6 +347,7 @@ public class RecipeForm extends AppCompatActivity {
         //And it will be keep running until you close the entire application from task manager.
         //This method will executed only once.
 
+        // Zadanie 3.Service
         if (!mAlreadyStartedService && mMsgView != null) {
 
             mMsgView.setText("Loading location...");
